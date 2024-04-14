@@ -1,10 +1,14 @@
 {
   "name": "webpack-embedding-generator",
-  "version": "1.0.0",
-  "description": "",
+  "version": "1.0.1",
+  "description": "A Webpack plugin designed to generate embedding code snippets by traversing the Abstract Syntax Tree (AST) of your project. Ideal for automating the embedding of specific modules or components into web pages.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/matbee-eth/webpack-ast-traversal-plugin.git"
   },
   "author": "",
   "license": "ISC"
