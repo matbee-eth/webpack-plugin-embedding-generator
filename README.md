@@ -1,6 +1,6 @@
-# EmbeddingPlugin
+# Webpack Embedding Plugin
 
-The `EmbeddingPlugin` is a custom webpack plugin that generates embeddings of type `Number[]` for specified file types and caches them for efficient retrieval during the build process.
+The Webpack Embedding Plugin is a custom webpack plugin that generates embeddings of type `Number[]` for specified file types in your codebase. These embeddings can be used to create a Retrieval Augmented Generation (RAG) system with private Language Models (LLMs) for enhanced code understanding and generation tasks.
 
 ## Features
 
@@ -8,32 +8,33 @@ The `EmbeddingPlugin` is a custom webpack plugin that generates embeddings of ty
 - Caches embeddings to avoid redundant generation
 - Writes the generated embeddings to a configurable JSON file (default: `embeddings.json`) in the output directory
 - Supports custom embedding functions for generating embeddings
+- Enables building a codebase RAG system with private LLMs
 
 ## Installation
 
-To install the `EmbeddingPlugin`, you can include it in your project's dependencies using npm or yarn:
+To install the Webpack Embedding Plugin, you can include it in your project's dependencies using npm or yarn:
 
 ```bash
-npm install embedding-plugin
+npm install webpack-embedding-plugin
 ```
 
 or
 
 ```bash
-yarn add embedding-plugin
+yarn add webpack-embedding-plugin
 ```
 
 ## Usage
 
-To use the `EmbeddingPlugin` in your webpack configuration, you need to require the plugin and add it to the `plugins` array:
+To use the Webpack Embedding Plugin in your webpack configuration, you need to require the plugin and add it to the `plugins` array:
 
 ```javascript
-const EmbeddingPlugin = require('embedding-plugin');
+const WebpackEmbeddingPlugin = require('webpack-embedding-plugin');
 
 module.exports = {
   // ...
   plugins: [
-    new EmbeddingPlugin({
+    new WebpackEmbeddingPlugin({
       embedFn: yourEmbeddingFunction,
       fileExtensions: ['.ts', '.tsx'],
       outputPath: 'path/to/embeddings.json',
@@ -44,48 +45,27 @@ module.exports = {
 
 ### Options
 
-The `EmbeddingPlugin` accepts the following options:
+The Webpack Embedding Plugin accepts the following options:
 
 - `embedFn` (required): A function that generates embeddings for a given file content and name. It should return a promise that resolves to the generated embedding of type `Number[]`.
 - `fileExtensions` (optional): An array of file extensions to generate embeddings for. Default: `['.ts', '.tsx']`.
 - `outputPath` (optional): The path to the output JSON file relative to the webpack output directory. Default: `'embeddings.json'`.
 
-## Embedding Function
+## Codebase RAG System
 
-The `embedFn` option is a function that you need to provide to generate embeddings for your files. It should have the following signature:
+The generated embeddings can be used to build a codebase Retrieval Augmented Generation (RAG) system with private Language Models (LLMs). RAG is a technique that combines information retrieval with language model generation to enhance the understanding and generation capabilities of LLMs for code-related tasks.
 
-```typescript
-function embedFn(content: string, name: string): Promise<Number[]>;
-```
+By generating embeddings for your codebase files, you can create a vector database that represents the semantic meaning of your code. When querying the private LLM, you can retrieve relevant code snippets based on their embedding similarity to the query. The retrieved code snippets can then be used as additional context for the LLM to generate more accurate and contextually relevant code completions, suggestions, or responses.
 
-The `embedFn` receives the file content and name as arguments and should return a promise that resolves to the generated embedding of type `Number[]`.
+To build a codebase RAG system with the generated embeddings:
 
-Here's an example of a simple embedding function that generates a random embedding of length 5:
+1. Use the Webpack Embedding Plugin to generate embeddings for your codebase files.
+2. Store the generated embeddings in a vector database or search engine that supports similarity search (e.g., Faiss, Elasticsearch, Milvus).
+3. When querying the private LLM for code-related tasks, retrieve relevant code snippets from the vector database based on the similarity of the query embedding to the stored embeddings.
+4. Provide the retrieved code snippets as additional context to the private LLM to generate more accurate and contextually relevant responses.
 
-```javascript
-function yourEmbeddingFunction(content, name) {
-  const embedding = Array.from({ length: 5 }, () => Math.random());
-  return Promise.resolve(embedding);
-}
-```
-
-## Output
-
-The `EmbeddingPlugin` generates a JSON file at the specified `outputPath` (default: `embeddings.json`) in the webpack output directory. The JSON file contains the generated embeddings for each processed file, with the file paths as keys and the embeddings as values.
-
-Example output:
-
-```json
-{
-  "src/file1.ts": [0.123, 0.456, 0.789, 0.987, 0.654],
-  "src/file2.tsx": [0.321, 0.654, 0.987, 0.123, 0.456]
-}
-```
-
-## Caching
-
-The `EmbeddingPlugin` caches the generated embeddings to avoid redundant generation during subsequent builds. The cache is stored using webpack's caching mechanism and is automatically invalidated when the corresponding files change.
+By leveraging the power of embeddings and RAG, you can enhance the performance and capabilities of your private LLMs for code understanding and generation tasks.
 
 ## License
 
-The `EmbeddingPlugin` is open-source software licensed under the [MIT License](LICENSE).
+The Webpack Embedding Plugin is open-source software licensed under the [MIT License](LICENSE).
